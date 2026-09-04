@@ -3,6 +3,7 @@ package cz.majasana;
 import java.util.ArrayList;
 
 public class Lekce {
+
     private String nazev;
     private String cas;
     private int kapacita;
@@ -19,6 +20,18 @@ public class Lekce {
         return nazev;
     }
 
+    public String getCas() {
+        return cas;
+    }
+
+    public int getKapacita() {
+        return kapacita;
+    }
+
+    public int getPocetVolnychMist() {
+        return kapacita - prihlaseni.size();
+    }
+
     public boolean jeVolnoMisto() {
         return prihlaseni.size() < kapacita;
     }
@@ -27,23 +40,18 @@ public class Lekce {
         if (!jeVolnoMisto()) {
             return false;
         }
+
         prihlaseni.add(jmeno);
         return true;
     }
 
-    public void vypisInfo() {
-        int volnaMista = kapacita - prihlaseni.size();
-        System.out.println(nazev + " (" + cas + ") - volných míst: " + volnaMista + "/" + kapacita);
+    public ArrayList<String> getPrihlaseni() {
+        return new ArrayList<>(prihlaseni);
     }
 
-    public void vypisPrihlasene() {
-        if (prihlaseni.isEmpty()) {
-            System.out.println("Zatím nikdo přihlášený.");
-            return;
-        }
-        System.out.println("Přihlášení na lekci " + nazev + ":");
-        for (String jmeno : prihlaseni) {
-            System.out.println("- " + jmeno);
-        }
+    @Override
+    public String toString() {
+        return nazev + " (" + cas + ") - volných míst: "
+                + getPocetVolnychMist() + "/" + kapacita;
     }
 }

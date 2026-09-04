@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
 
         ArrayList<Lekce> lekce = new ArrayList<>();
+
         lekce.add(new Lekce("Ranní jóga", "8:00", 10));
         lekce.add(new Lekce("Power jóga", "17:00", 8));
         lekce.add(new Lekce("Jóga pro začátečníky", "19:00", 12));
@@ -29,32 +32,40 @@ public class Main {
                 case "1":
                     zobrazLekce(lekce);
                     break;
+
                 case "2":
                     rezervujLekci(lekce, scanner);
                     break;
+
                 case "3":
                     zobrazPrihlasene(lekce, scanner);
                     break;
+
                 case "4":
                     konec = true;
                     System.out.println("Nashledanou na matě!");
                     break;
+
                 default:
                     System.out.println("Neplatná volba, zkus to znovu.");
             }
         }
+
+        scanner.close();
     }
 
     private static void zobrazLekce(ArrayList<Lekce> lekce) {
         System.out.println();
+
         for (int i = 0; i < lekce.size(); i++) {
-            System.out.print((i + 1) + ". ");
-            lekce.get(i).vypisInfo();
+            System.out.println((i + 1) + ". " + lekce.get(i));
         }
     }
 
     private static void rezervujLekci(ArrayList<Lekce> lekce, Scanner scanner) {
+
         zobrazLekce(lekce);
+
         System.out.print("Zadej číslo lekce, kterou chceš rezervovat: ");
         int cislo = Integer.parseInt(scanner.nextLine());
 
@@ -63,12 +74,13 @@ public class Main {
             return;
         }
 
-        Lekce vybrana = lekce.get(cislo - 1);
+        Lekce vybranaLekce = lekce.get(cislo - 1);
 
         System.out.print("Zadej své jméno: ");
         String jmeno = scanner.nextLine();
 
-        boolean uspech = vybrana.pridatRezervaci(jmeno);
+        boolean uspech = vybranaLekce.pridatRezervaci(jmeno);
+
         if (uspech) {
             System.out.println("Rezervace proběhla úspěšně!");
         } else {
@@ -77,7 +89,9 @@ public class Main {
     }
 
     private static void zobrazPrihlasene(ArrayList<Lekce> lekce, Scanner scanner) {
+
         zobrazLekce(lekce);
+
         System.out.print("Zadej číslo lekce: ");
         int cislo = Integer.parseInt(scanner.nextLine());
 
@@ -86,6 +100,18 @@ public class Main {
             return;
         }
 
-        lekce.get(cislo - 1).vypisPrihlasene();
+        Lekce vybranaLekce = lekce.get(cislo - 1);
+        ArrayList<String> prihlaseni = vybranaLekce.getPrihlaseni();
+
+        if (prihlaseni.isEmpty()) {
+            System.out.println("Zatím nikdo přihlášený.");
+            return;
+        }
+
+        System.out.println("Přihlášení na lekci " + vybranaLekce.getNazev() + ":");
+
+        for (String jmeno : prihlaseni) {
+            System.out.println("- " + jmeno);
+        }
     }
 }
