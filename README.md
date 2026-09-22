@@ -22,7 +22,7 @@ A simple console application for managing yoga classes and reservations, written
 
 The application currently consists of:
 
-- `Lekce` – represents a yoga class and handles its reservation logic
+- `Lesson` – represents a yoga class and handles its reservation logic
 - `Main` – provides the console user interface and application flow
 
 ## Planned features
